@@ -1,0 +1,37 @@
+.article-body
+  > .ui.right.rail
+    margin-left: -1em
+    padding-left: 1em
+
+    .ui.header
+      margin-top: 1em!important
+
+.ui.article > .ui.grid > .row.article-body > aside.column
+  display: none
+
+.right.rail > .ui.article > .ui.grid > .row.article-body > aside.column
+  display: block
+
+p
+  font-size: 1.15rem
+  line-height: 1.5rem
+
+
+@media only screen and (min-width: 1200px)
+  .right.rail
+    left: 827px!important
+    width: 250px!important
+
+@media only screen and (min-width: 992px) and (max-width: 1199px)
+  .right.rail
+    left: 732px!important
+    width: 200px!important
+
+@media only screen and (min-width: 768px) and (max-width: 991px)
+  .right.rail
+    left: 550px!important
+    width: 160px!important
+
+@media only screen and (max-width: 767px)
+  .right.rail
+    display: none
