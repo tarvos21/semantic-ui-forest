@@ -8,12 +8,14 @@ header.row.article-head
     hr
     div#disqus_thread
     noscript Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+
   aside.four.wide.column lang="en"
-    .ui.small.header Committed
+    .ui.divider
+    .ui.tiny.header Committed
     date
       == @item[:created_at].to_date
 
-    .ui.small.header Category
+    .ui.tiny.header Category
     .ui.list
       .item
         a href="/categories##{@item[:category].downcase}"
@@ -21,7 +23,7 @@ header.row.article-head
             = @item[:category]
             sup == articles_with_attribute(:category, @item[:category]).length
 
-    .ui.small.header Tags
+    .ui.tiny.header Tags
     .ui.list
       - @item[:tags].each do |tag|
         .item
@@ -29,7 +31,11 @@ header.row.article-head
             .ui.label
               = tag
               sup == articles_with_attribute(:tags, tag).length
-    .ui.small.header Links
-    .ui.small.two.item.menu
+    .ui.tiny.header Links
+    .ui.tiny.two.item.menu
       == previous_link
       == next_link
+
+
+link href="/static/stylesheets/post.css" rel="stylesheet" type="text/css"
+script src="/static/javascripts/post.js"
