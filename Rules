@@ -52,12 +52,27 @@ compile '/posts/**/*' do
   case ext
   when /slim/
     filter :slim
+    layout item[:layout] || '/default.*'
   when /md|markdown|org/
     filter :pandoc, args: [:mathjax, {:from => pandoc_ext_from[ext], :to => :html5}, :toc]
+    layout '/post.*'
+    layout '/content.*'
+    layout item[:layout] || '/default.*'
   end
-  layout '/post.*'
-  layout '/content.*'
-  layout item[:layout] || '/default.*'
+end
+
+compile '/notes/**/*' do
+  ext = item[:extension]
+  case ext
+  when /slim/
+    filter :slim
+    layout item[:layout] || '/default.*'
+  when /md|markdown|org/
+    filter :pandoc, args: [:mathjax, {:from => pandoc_ext_from[ext], :to => :html5}, :toc]
+    layout '/post.*'
+    layout '/content.*'
+    layout item[:layout] || '/default.*'
+  end
 end
 
 compile '/themes/**/*' do
