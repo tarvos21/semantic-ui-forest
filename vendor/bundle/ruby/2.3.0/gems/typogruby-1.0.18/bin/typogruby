@@ -1,0 +1,102 @@
+#!/usr/bin/env ruby -rubygems
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+require 'typogruby'
+require 'optparse'
+
+operations = [:smartypants, :initial_quotes, :amp, :widont, :caps]
+explicit_on = []
+explicit_off = []
+output_filename = nil
+
+OptionParser.new do |options|
+  options.banner = <<-EOS
+Improves web typography with text filters.
+
+By default all filters are applied. You can disable partical filters using
+the --no switch, or run only specified filters.
+
+Examples:
+
+  typogruby FILE              Runs all filters
+  typogruby --no-widows FILE  Runs all filters except for widows
+  typogruby -w FILE           Runs only the filter for widows
+  typogruby --widows FILE     Runs only the filter for widows
+  typogruby -o FILE2 FILE1    Filters FILE1 and saves to FILE2
+  cat FILE | typogruby        Filter input from STDIN
+
+Usage: typogruby [options] filename [filename, ...]
+EOS
+
+  options.separator ""
+  options.separator "Available options:"
+
+  options.on '-s', '--[no-]smartypants', 'Apply smartypants' do |v|
+    (v ? explicit_on : explicit_off) << :smartypants
+  end
+
+  options.on '-q', '--[no-]quotes', 'Wrap initial quotes' do |v|
+    (v ? explicit_on : explicit_off) << :initial_quotes
+  end
+
+  options.on '-a', '--[no-]amps', 'Wrap ampersands' do |v|
+    (v ? explicit_on : explicit_off) << :amp
+  end
+
+  options.on '-n', '--[no-]entities', 'Convert special characters to HTML entities' do |v|
+    (v ? explicit_on : explicit_off) << :entities
+  end
+
+  options.on '-w', '--[no-]widows', 'Prevent widows' do |v|
+    (v ? explicit_on : explicit_off) << :widont
+  end
+
+  options.on '-c', '--[no-]caps', 'Wrap consecutive capitals' do |v|
+    (v ? explicit_on : explicit_off) << :caps
+  end
+
+  options.on '-o', '--output FILENAME', 'Save output to file' do |v|
+    output_filename = v
+  end
+
+  options.on_tail '-h', '--help', 'Show this message' do
+    $stderr.print options
+    exit
+  end
+
+  options.on_tail '-v', '--version', 'Display version information' do
+    require 'version'
+    $stderr.print "Typogruby #{Typogruby::VERSION}"
+    exit
+  end
+  options.parse!
+end
+
+operations_todo = if explicit_off.any? && explicit_on.empty?
+  operations - explicit_off
+elsif explicit_off.empty? && explicit_on.any?
+  explicit_on
+else
+  operations
+end
+
+begin
+  output = operations_todo.inject(ARGF.read) { |t, o| Typogruby.send(o, t) }
+rescue Interrupt
+  abort "Interrupted by user."
+rescue Exception => e
+  abort "Error processing input: #{e.message}"
+end
+
+# Either use the output_filename to save the output to a file on disk,
+# or print it to stdout
+if output_filename
+  begin
+    File.open(output_filename, 'w') do |f|
+      f.print output
+    end
+  rescue Exception => e
+    abort "A problem occured when trying to write to file #{output_filename}: #{e.message}"
+  end
+else
+  $stdout.print output
+end
