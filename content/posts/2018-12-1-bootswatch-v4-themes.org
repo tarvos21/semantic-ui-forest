@@ -1,0 +1,24 @@
+We are very excited to announce that we have added 21 new themes ported from [[https://bootswatch.com/][Bootswatch]] version 4.
+In these 21 themes, [[https://semantic-ui-forest/themes/bootswatch-v4/litera/][Litera]], [[https://semantic-ui-forest/themes/bootswatch-v4/lux/][Lux]], [[https://semantic-ui-forest/themes/bootswatch-v4/materia/][Materia]], [[https://semantic-ui-forest/themes/bootswatch-v4/pulse/][Pulse]], [[https://semantic-ui-forest/themes/bootswatch-v4/sketchy/][Sketchy]] are completely new.
+
+It's quite easy to apply these themes to your sites. You could just click the ~Download~ button, and replace the original ~semantic.min.css~ with the theme.
+
+All themes are open-sourced on GitHub:
+
+- [[https://github.com/semantic-ui-forest/forest-themes][semantic-ui-forest/forest-themes]]: a collection of themes for Semantic UI.
+
+If you have any problems, feel free to open an issue. And of course, pull requests are always welcomed.
+
+One more thing, we have packed Semantic-UI-Forest themes into the 'forest-theme-css' NPM package, so it's more convenient to use it in your projects through the NPM package system.
+
+You can find it here: https://www.npmjs.com/package/forest-themes-css, not very popular at present, but growing steadily.
+
+We are astonished to discover that there are already some packages, repositories, projects that use our work directly with different names, they are not officially and persistently maintained.
+We are Semantic-UI-Forest, this is the only genuine one.
+
+Still, we must give many thanks and show our respect to
+[[https://semantic-ui.com/][Semantic-UI]] for this wonderful front-end framework, to [[https://nanoc.ws/][Nanoc]] for building static
+websites easily and quickly, to [[https://bootswatch.com/][Bootswatch]] and [[https://getbootstrap.com/][Bootstrap]] that inspired us a lot,
+and to Github for hosting all of our work for free.
+
+Happy building!
